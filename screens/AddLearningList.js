@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
-import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
+import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
+import FireStore from '../firestore';
 
 export default class AddLearningList extends React.PureComponent {
 
@@ -8,11 +9,41 @@ export default class AddLearningList extends React.PureComponent {
         super(props);
         this.state = {
             name: '',
-            description: ''
+            description: '',
+            adding: false
         }
     }
 
-    createList() {}
+    async createList() {
+        this.setState({
+            adding: true
+        });
+
+        await FireStore.collection('LearningLists').add({
+            name: this.state.name,
+            description: this.state.description
+        });
+
+        this.props.navigation.navigate('Home');
+    }
+
+    getButton() {
+        if ( this.state.adding === false ) {
+            return (
+                <Button
+                    large
+                    icon={{name: 'add'}}
+                    title='Add'
+                    onPress={() => this.createList()} />
+            );
+        } else {
+            return (
+                <Button
+                    large
+                    title='Adding...' />
+            );
+        }
+    }
 
     render() {
         return (
@@ -30,11 +61,7 @@ export default class AddLearningList extends React.PureComponent {
                 <FormInput 
                     onChangeText={(description) => this.setState({description: description})} />
 
-                <Button
-                    large
-                    icon={{name: 'add'}}
-                    title='Add'
-                    onPress={() => this.createList()} />
+                { this.getButton() }
 
             </View>
         );
