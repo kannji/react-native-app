@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
+import firebase from '@firebase/app';
+import '@firebase/firestore';
+
 import FireStore from '../firestore';
 
 export default class AddLearningList extends React.PureComponent {
@@ -10,25 +13,29 @@ export default class AddLearningList extends React.PureComponent {
         this.state = {
             name: '',
             description: '',
-            adding: false
+            isAdding: false
         }
     }
 
     async createList() {
         this.setState({
-            adding: true
+            isAdding: true
         });
+
+        let timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
         await FireStore.collection('LearningLists').add({
             name: this.state.name,
-            description: this.state.description
+            description: this.state.description,
+            createdAt: timestamp,
+            updatedAt: timestamp
         });
 
         this.props.navigation.navigate('Home');
     }
 
     getButton() {
-        if ( this.state.adding === false ) {
+        if ( this.state.isAdding === false ) {
             return (
                 <Button
                     large
