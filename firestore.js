@@ -1,7 +1,7 @@
 import firebase from '@firebase/app';
 import '@firebase/firestore';
 
-const FIRESTORE_CONFIG = {
+const APP_CONFIG = {
     apiKey: "AIzaSyAOJnlPctISpWZhEInlOolE7WjKZMaXiKM",
     authDomain: "kannji-app.firebaseapp.com",
     databaseURL: "https://kannji-app.firebaseio.com",
@@ -10,6 +10,13 @@ const FIRESTORE_CONFIG = {
     messagingSenderId: "246750548148"
 };
 
-const firestore = firebase.firestore( firebase.initializeApp( FIRESTORE_CONFIG ) );
+const FIRESTORE_SETTINGS = {
+    timestampsInSnapshots: true
+}
+
+const firestore = firebase.firestore( firebase.initializeApp( APP_CONFIG ) );
+
+firestore.settings(FIRESTORE_SETTINGS);
 
 export default firestore;
+
