@@ -14,18 +14,19 @@ export default class LearningListOverview extends React.Component {
         }
     }
 
-    componentDidMount() {
-        return this.loadLearningLists();
+    componentWillMount() {
+        this.addLearningListsSnapshotListener();
     }
 
-    async loadLearningLists() {
-        let learningListsSnapshot = await FireStore.collection('LearningLists').orderBy('updatedAt', 'desc').get();
-
-        console.log(learningListsSnapshot.size);
-        this.setState({
-            isLoading: false,
-            learningListsSnapshot: learningListsSnapshot
-        });
+    addLearningListsSnapshotListener() {
+        FireStore
+            .collection('LearningLists').orderBy('updatedAt', 'desc')
+            .onSnapshot((snapshot) => {
+                this.setState({
+                    isLoading: false,
+                    learningListsSnapshot: snapshot
+                });
+            });
     }
 
     renderLearningLists() {
