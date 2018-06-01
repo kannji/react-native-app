@@ -3,11 +3,13 @@ import { createStackNavigator } from 'react-navigation';
 
 import LearningListOverview from './screens/LearningListOverview'
 import AddLearningList from './screens/AddLearningList'
+import LearningListDetail from './screens/LearningListDetail'
 
 const NavRoot = createStackNavigator(
     {
         Home: {screen: LearningListOverview},
         AddLearningList: {screen: AddLearningList},
+        LearningListDetail: {screen: LearningListDetail},
     },
     {
         initialRoutName: 'Home',
