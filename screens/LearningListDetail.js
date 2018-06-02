@@ -3,7 +3,7 @@ import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 
 import FireStore from '../db';
-import LearningListLevelOverview from './Levels.js'
+import SectionList from './SectionList.js'
 
 
 export default class Book extends React.PureComponent {
@@ -29,7 +29,7 @@ export default class Book extends React.PureComponent {
 
                 <Text>{description}</Text>
 
-                <LearningListLevelOverview learningListId={id} />
+                <SectionList learningListId={id} />
             </View>
         );
     }

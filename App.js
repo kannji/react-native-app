@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 
-import LearningListOverview from './screens/LearningListOverview';
+import Home from './screens/Home';
 import AddLearningList from './screens/AddLearningList';
 import LearningListDetail from './screens/LearningListDetail';
 import AddLearningListLevel from './screens/AddLearningListLevel';
@@ -10,7 +10,7 @@ import AddLearningEntry from './screens/AddLearningEntry';
 
 const NavRoot = createStackNavigator(
     {
-        Home: {screen: LearningListOverview},
+        Home: {screen: Home},
         AddLearningList: {screen: AddLearningList},
         LearningListDetail: {screen: LearningListDetail},
         AddLearningListLevel: {screen: AddLearningListLevel},

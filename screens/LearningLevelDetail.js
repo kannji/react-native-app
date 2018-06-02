@@ -3,7 +3,7 @@ import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 
 import FireStore from '../db';
-import LearningEntryOverview from './LearningEntryOverview.js'
+import VocableList from './VocableList.js'
 
 
 export default class Section extends React.PureComponent {
@@ -26,7 +26,7 @@ export default class Section extends React.PureComponent {
                             onPress={() => navigation.navigate( 'AddLearningList' )} />
                     } />
 
-                <LearningEntryOverview learningListId={learningListId} learningLevelId={learningLevelId}/>
+                <VocableList learningListId={learningListId} learningLevelId={learningLevelId}/>
             </View>
         );
     }
