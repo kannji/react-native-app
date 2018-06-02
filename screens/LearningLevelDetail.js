@@ -3,7 +3,7 @@ import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 
 import FireStore from '../firestore';
-import LearningListLevelOverview from './Levels.js'
+import LearningEntryOverview from './LearningEntryOverview.js'
 
 
 export default class LearningListDetail extends React.PureComponent {
@@ -11,27 +11,25 @@ export default class LearningListDetail extends React.PureComponent {
     render() {
         let {navigation} = this.props;
 
-        let id = navigation.getParam( 'id' );
-        let name = navigation.getParam( 'name' );
-        let description = navigation.getParam( 'description' );
+        let learningListId = navigation.getParam( 'learningListId' );
+        let learningLevelId = navigation.getParam( 'learningLevelId' );
 
         return (
             <View>
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>List: {name}</Text>}
+                    centerComponent={<Text>Level: {learningLevelId}</Text>}
                     rightComponent={
                         <Icon
                             name='add'
                             onPress={() => navigation.navigate( 'AddLearningList' )} />
                     } />
 
-                <Text>{description}</Text>
-
-                <LearningListLevelOverview learningListId={id} />
+                <LearningEntryOverview learningListId={learningListId} learningLevelId={learningLevelId}/>
             </View>
         );
     }
 }
+
 

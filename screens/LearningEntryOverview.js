@@ -23,7 +23,7 @@ class LearningListLevelOverview extends React.PureComponent {
 
     addLearningListLevelsSnapshotListener() {
         FireStore
-            .collection('LearningLists').doc(this.props.learningListId).collection('Levels')
+            .collection('LearningLists').doc(this.props.learningListId).collection('Levels').doc( this.props.learningLevelId ).collection('Entries')
             .onSnapshot((levelSnapshot) => {
                 this.setState({
                     isLoading: false,
@@ -34,28 +34,29 @@ class LearningListLevelOverview extends React.PureComponent {
 
     renderLearningListLevels() {
         let learningListLevelItems = [];
-        let {navigation, learningListId} = this.props;
 
         this.state.learningListLevelsSnapshot.forEach((learningListLevelDocument) => {
             let learningListLevelData = learningListLevelDocument.data();
             learningListLevelItems.push(
                 <ListItem
                     key={learningListLevelDocument.id}
-                    title={learningListLevelData.name}
-                    leftIcon={{name:'add'}}
-                    onPress={() => navigation.navigate( 'LearningLevelDetail', { learningListId: this.props.learningListId, learningLevelId: learningListLevelDocument.id })}/>
+                    title={learningListLevelData.kakikata}
+                    subtitle={learningListLevelData.translation}
+                    leftIcon={{name:'edit'}} />
             );
         });
 
-        learningListLevelItems.push(
+        let addLearningListLevel = 
             <ListItem
-                key={'new-level'}
-                title='New Level'
+                key={'new-entry'}
+                title='New Entry'
                 leftIcon={{name:'star'}}
-                onPress={() => navigation.navigate( 'AddLearningListLevel', {
-                    learningListId: learningListId
-                })}/>
-        );
+                onPress={() => this.props.navigation.navigate( 'AddLearningEntry', {
+                    learningListId: this.props.learningListId,
+                    learningLevelId: this.props.learningLevelId
+                })}/>;
+
+        learningListLevelItems.push(addLearningListLevel);
 
         return learningListLevelItems;
     }
@@ -76,3 +77,4 @@ class LearningListLevelOverview extends React.PureComponent {
 }
 
 export default withNavigation(LearningListLevelOverview);
+
