@@ -4,6 +4,7 @@ import { Header, Icon, List, ListItem } from 'react-native-elements'
 
 import FireStore from '../firestore';
 
+
 export default class LearningListOverview extends React.Component {
 
     constructor(props) {
@@ -29,6 +30,16 @@ export default class LearningListOverview extends React.Component {
             });
     }
 
+    navigateToLearningListDetail(learningListDocument) {
+        let learningListData = learningListDocument.data();
+
+        this.props.navigation.navigate('LearningListDetail', {
+            id: learningListDocument.id,
+            name: learningListData.name,
+            description: learningListData.description
+        });
+    }
+
     renderLearningLists() {
         let learningListItems = [];
 
@@ -38,7 +49,8 @@ export default class LearningListOverview extends React.Component {
                 <ListItem
                     key={learningListDocument.id}
                     title={learningListData.name}
-                    leftIcon={{name:'add'}}/>
+                    leftIcon={{name:'add'}}
+                    onPress={() => this.navigateToLearningListDetail(learningListDocument)}/>
             );
         });
 
