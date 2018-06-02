@@ -1,11 +1,12 @@
 import React from 'react';
 import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react-native';
 import { Header, Icon, List, ListItem } from 'react-native-elements'
+import { withNavigation } from 'react-navigation';
 
 import FireStore from '../firestore';
 
 
-export default class ListLevels extends React.PureComponent {
+class LearningListLevelOverview extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -22,7 +23,7 @@ export default class ListLevels extends React.PureComponent {
 
     addLearningListLevelsSnapshotListener() {
         FireStore
-            .collection('LearningLists').doc().collection('Levels')
+            .collection('LearningLists').doc(this.props.learningListId).collection('Levels')
             .onSnapshot((levelSnapshot) => {
                 this.setState({
                     isLoading: false,
@@ -44,12 +45,16 @@ export default class ListLevels extends React.PureComponent {
             );
         });
 
-        learningListLevelItems.push(
+        let addLearningListLevel = 
             <ListItem
                 key={'new-level'}
                 title='New Level'
-                leftIcon={{name:'star'}} />
-        );
+                leftIcon={{name:'star'}}
+                onPress={() => this.props.navigation.navigate( 'AddLearningListLevel', {
+                    learningListId: this.props.learningListId
+                })}/>;
+
+        learningListLevelItems.push(addLearningListLevel);
 
         return learningListLevelItems;
     }
@@ -69,4 +74,4 @@ export default class ListLevels extends React.PureComponent {
     }
 }
 
-
+export default withNavigation(LearningListLevelOverview);
