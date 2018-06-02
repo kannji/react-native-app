@@ -53,15 +53,15 @@ export function addVocableToSection({
         });
 }
 
-function getAllBooks() {
+export function getAllBooks() {
     return db.collection( 'LearningLists' );
 }
 
-function getAllSectionsForBook( bookId ) {
+export function getAllSectionsForBook( bookId ) {
     return getAllBooks().doc( bookId ).collection( 'Levels' );
 }
 
-function getVocabularyForSection( bookId, sectionId ) {
+export function getVocabularyForSection( bookId, sectionId ) {
     return getAllSectionsForBook( bookId ).doc( sectionId ).collection( 'Entries' );
 }
 

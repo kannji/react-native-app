@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 
-import FireStore from '../firestore';
+import * as db from '../firestore';
 
 
 export default class LearningListOverview extends React.Component {
@@ -16,12 +16,11 @@ export default class LearningListOverview extends React.Component {
     }
 
     componentWillMount() {
-        this.addLearningListsSnapshotListener();
+        this.registerBooksListener();
     }
 
-    addLearningListsSnapshotListener() {
-        FireStore
-            .collection('LearningLists').orderBy('updatedAt', 'desc')
+    registerBooksListener() {
+        db.getAllBooks().orderBy('updatedAt', 'desc')
             .onSnapshot((snapshot) => {
                 this.setState({
                     isLoading: false,

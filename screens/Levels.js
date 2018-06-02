@@ -3,7 +3,7 @@ import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 import { withNavigation } from 'react-navigation';
 
-import FireStore from '../firestore';
+import * as db from '../firestore';
 
 
 class LearningListLevelOverview extends React.PureComponent {
@@ -18,12 +18,13 @@ class LearningListLevelOverview extends React.PureComponent {
     }
 
     componentWillMount() {
-        this.addLearningListLevelsSnapshotListener();
+        this.registerSectionListener();
     }
 
-    addLearningListLevelsSnapshotListener() {
-        FireStore
-            .collection('LearningLists').doc(this.props.learningListId).collection('Levels')
+    registerSectionListener() {
+        let bookId = this.props.learningListId;
+
+        db.getAllSectionsForBook( bookId )
             .onSnapshot((levelSnapshot) => {
                 this.setState({
                     isLoading: false,
