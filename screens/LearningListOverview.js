@@ -30,6 +30,16 @@ export default class LearningListOverview extends React.Component {
             });
     }
 
+    navigateToLearningListDetail(learningListDocument) {
+        let learningListData = learningListDocument.data();
+
+        this.props.navigation.navigate('LearningListDetail', {
+            id: learningListDocument.id,
+            name: learningListData.name,
+            description: learningListData.description
+        });
+    }
+
     renderLearningLists() {
         let learningListItems = [];
 
@@ -40,7 +50,7 @@ export default class LearningListOverview extends React.Component {
                     key={learningListDocument.id}
                     title={learningListData.name}
                     leftIcon={{name:'add'}}
-                    onPress={() => this.props.navigation.navigate('LearningListDetail', {learningListId: learningListDocument.id})}/>
+                    onPress={() => this.navigateToLearningListDetail(learningListDocument)}/>
             );
         });
 

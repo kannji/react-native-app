@@ -3,65 +3,35 @@ import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 
 import FireStore from '../firestore';
+import LearningListLevelOverview from './Levels.js'
 
 
 export default class LearningListDetail extends React.PureComponent {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-            isLoading: true,
-            learningListSnapshot: null
-		}
-    }
+    render() {
+        let {navigation} = this.props;
 
-	componentWillMount() {
-        this.addLearningListSnapshotListener();
-    }
+        let id = navigation.getParam( 'id' );
+        let name = navigation.getParam( 'name' );
+        let description = navigation.getParam( 'description' );
 
-    addLearningListSnapshotListener() {
-        FireStore
-            .collection('LearningLists').doc(this.props.navigation.getParam('learningListId', ''))
-            .onSnapshot((snapshot) => {
-                this.setState({
-                    isLoading: false,
-                    learningListSnapshot: snapshot
-                });
-            });
-    }
+        return (
+            <View>
 
-	deleteLearningList() {
-    
-    }
+                <Header
+                    leftComponent={<Icon name='menu' />}
+                    centerComponent={<Text>{name}</Text>}
+                    rightComponent={
+                        <Icon
+                            name='add'
+                            onPress={() => navigation.navigate( 'AddLearningList' )} />
+                    } />
 
-	render() {
-		if (this.state.isLoading) {
-			return (
-				<View>
-					<ActivityIndicator/>
-				</View>
-			);
-		} else {
-            let learningListData = this.state.learningListSnapshot.data();
+                <Text>{description}</Text>
 
-            return (
-                <View>
-
-                    <Header
-                        leftComponent={<Icon name='menu' />}
-                        centerComponent={<Text>{learningListData.name}</Text>}
-                        rightComponent={
-                            <Icon
-                                name='add'
-                                onPress={() => this.props.navigation.navigate( 'AddLearningList' )} />
-                        } />
-
-                    <Text>{learningListData.description}</Text>
-
-                </View>
-            );
-
-    	}
+                <LearningListLevelOverview learningListId={id} />
+            </View>
+        );
     }
 }
 
