@@ -1,10 +1,9 @@
 import React from 'react';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
-import firebase from '@firebase/app';
-import '@firebase/firestore';
 
-import FireStore from '../firestore';
+import * as db from '../firestore';
+
 
 export default class AddLearningList extends React.PureComponent {
 
@@ -14,31 +13,32 @@ export default class AddLearningList extends React.PureComponent {
             kakikata: '',
             yomikata: '',
             translation: '',
+            remark: '',
             example: '',
             isAdding: false
         }
     }
 
-    createEntry() {
+    createVocable() {
         this.setState({
             isAdding: true
         });
 
         let {navigation} = this.props;
 
-        let timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-        FireStore
-            .collection('LearningLists').doc(this.props.navigation.getParam( 'learningListId' )).collection('Levels').doc(this.props.navigation.getParam('learningLevelId')).collection('Entries').add({
+        db.addVocableToSection({
+            newVocable: {
                 kakikata: this.state.kakikata,
                 yomikata: this.state.yomikata,
                 translation: this.state.translation,
-                example: this.state.example,
-                createdAt: timestamp,
-                updatedAt: timestamp
-            }).then(() => {
-                this.props.navigation.navigate('Home');
-            });
+                remark: this.state.remark,
+                example: this.state.example
+            },
+            bookId: navigation.getParam( 'learningListId' ),
+            sectionId: navigation.getParam('learningLevelId')
+        }).then(() => {
+            this.props.navigation.navigate('Home');
+        });
     }
 
     getButton() {
@@ -48,7 +48,7 @@ export default class AddLearningList extends React.PureComponent {
                     large
                     icon={{name: 'add'}}
                     title='Add'
-                    onPress={() => this.createEntry()} />
+                    onPress={() => this.createVocable()} />
             );
         } else {
             return (
@@ -79,6 +79,10 @@ export default class AddLearningList extends React.PureComponent {
                 <FormInput
                     onChangeText={(translation) => this.setState({translation: translation})} />
                 
+                <FormLabel>Remark</FormLabel>
+                <FormInput
+                    onChangeText={(remark) => this.setState({remark: remark})} />
+
                 <FormLabel>Example</FormLabel>
                 <FormInput
                     onChangeText={(example) => this.setState({example: example})} />

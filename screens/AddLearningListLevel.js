@@ -1,10 +1,8 @@
 import React from 'react';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
-import firebase from '@firebase/app';
-import '@firebase/firestore';
 
-import FireStore from '../firestore';
+import * as db from '../firestore';
 
 export default class AddLearningList extends React.PureComponent {
 
@@ -16,21 +14,19 @@ export default class AddLearningList extends React.PureComponent {
         }
     }
 
-    createLevel() {
+    createSection() {
         this.setState({
             isAdding: true
         });
 
-        let timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-        FireStore
-            .collection('LearningLists').doc(this.props.navigation.getParam( 'learningListId' )).collection('Levels').add({
+        db.addSectionToBook({
+            newSection: {
                 name: this.state.name,
-                createdAt: timestamp,
-                updatedAt: timestamp
-            }).then(() => {
-                this.props.navigation.navigate('Home');
-            });
+            },
+            bookId: this.props.navigation.getParam('learningListId')
+        }).then(() => {
+            this.props.navigation.navigate('Home');
+        });
     }
 
     getButton() {
@@ -40,7 +36,7 @@ export default class AddLearningList extends React.PureComponent {
                     large
                     icon={{name: 'add'}}
                     title='Add'
-                    onPress={() => this.createLevel()} />
+                    onPress={() => this.createSection()} />
             );
         } else {
             return (

@@ -14,9 +14,66 @@ const FIRESTORE_SETTINGS = {
     timestampsInSnapshots: true
 }
 
-const firestore = firebase.firestore( firebase.initializeApp( APP_CONFIG ) );
+const db = firebase.firestore( firebase.initializeApp( APP_CONFIG ) );
 
-firestore.settings(FIRESTORE_SETTINGS);
+db.settings(FIRESTORE_SETTINGS);
 
-export default firestore;
+export default db;
 
+export function addBook({
+    newBook
+} = {}) {
+    return getAllBooks()
+        .add({
+            ...newBook,
+            ...getNewTimestampObject()
+        });
+}
+
+export function addSectionToBook({
+    newSection,
+    bookId
+} = {}) {
+    return getAllSectionsForBook( bookId )
+        .add({
+            ...newSection,
+            ...getNewTimestampObject()
+        });
+}
+
+export function addVocableToSection({
+    newVocable,
+    bookId,
+    sectionId
+} = {}) {
+    return getVocabularyForSection( bookId, sectionId )
+        .add({
+            ...newVocable,
+            ...getNewTimestampObject()
+        });
+}
+
+function getAllBooks() {
+    return db.collection( 'LearningLists' );
+}
+
+function getAllSectionsForBook( bookId ) {
+    return getAllBooks().doc( bookId ).collection( 'Levels' );
+}
+
+function getVocabularyForSection( bookId, sectionId ) {
+    return getAllSectionsForBook( bookId ).doc( sectionId ).collection( 'Entries' );
+}
+
+function getServerTime() {
+    return firebase.firestore.FieldValue.serverTimestamp();
+}
+
+function getNewTimestampObject() {
+    let serverTime = getServerTime();
+
+    return {
+        createdAt: serverTime,
+        updatedAt: serverTime
+    }
+}

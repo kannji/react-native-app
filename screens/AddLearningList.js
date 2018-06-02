@@ -1,10 +1,8 @@
 import React from 'react';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
-import firebase from '@firebase/app';
-import '@firebase/firestore';
 
-import FireStore from '../firestore';
+import * as db from '../firestore';
 
 export default class AddLearningList extends React.PureComponent {
 
@@ -17,21 +15,19 @@ export default class AddLearningList extends React.PureComponent {
         }
     }
 
-    async createList() {
+    createBook() {
         this.setState({
             isAdding: true
         });
 
-        let timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-        await FireStore.collection('LearningLists').add({
-            name: this.state.name,
-            description: this.state.description,
-            createdAt: timestamp,
-            updatedAt: timestamp
+        db.addBook({
+            newBook: {
+                name: this.state.name,
+                description: this.state.description
+            }
+        }).then(() => {
+            this.props.navigation.navigate('Home');
         });
-
-        this.props.navigation.navigate('Home');
     }
 
     getButton() {
@@ -41,7 +37,7 @@ export default class AddLearningList extends React.PureComponent {
                     large
                     icon={{name: 'add'}}
                     title='Add'
-                    onPress={() => this.createList()} />
+                    onPress={() => this.createBook()} />
             );
         } else {
             return (
