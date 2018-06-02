@@ -3,10 +3,10 @@ import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 import { withNavigation } from 'react-navigation';
 
-import * as db from '../firestore';
+import * as db from '../db';
 
 
-class LearningListLevelOverview extends React.PureComponent {
+class VocableList extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -78,5 +78,5 @@ class LearningListLevelOverview extends React.PureComponent {
     }
 }
 
-export default withNavigation(LearningListLevelOverview);
+export default withNavigation(VocableList);
 

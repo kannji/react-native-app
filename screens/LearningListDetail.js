@@ -2,11 +2,11 @@ import React from 'react';
 import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react-native';
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 
-import FireStore from '../firestore';
+import FireStore from '../db';
 import LearningListLevelOverview from './Levels.js'
 
 
-export default class LearningListDetail extends React.PureComponent {
+export default class Book extends React.PureComponent {
 
     render() {
         let {navigation} = this.props;

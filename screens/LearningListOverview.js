@@ -2,10 +2,10 @@ import React from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 
-import * as db from '../firestore';
+import * as db from '../db';
 
 
-export default class LearningListOverview extends React.Component {
+export default class Home extends React.Component {
 
     constructor(props) {
         super(props);

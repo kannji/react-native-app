@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
 
-import * as db from '../firestore';
+import * as db from '../db';
 
 
-export default class AddLearningList extends React.PureComponent {
+export default class CreateVocable extends React.PureComponent {
 
     constructor(props) {
         super(props);
