@@ -11,8 +11,6 @@ class SectionList extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        console.log(this.props);
-
         this.state = {
             isLoading: true,
             sections: null,

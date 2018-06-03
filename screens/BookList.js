@@ -32,7 +32,6 @@ class BookList extends React.PureComponent {
     }
 
     goToBook( bookId ) {
-        console.log(bookId);
         this.props.navigation.navigate( 'Book', {
             bookId: bookId,
         });
