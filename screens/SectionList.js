@@ -7,69 +7,69 @@ import { withNavigation } from 'react-navigation';
 import * as db from '../db';
 
 
-class SectionList extends React.PureComponent {
+class LessonList extends React.PureComponent {
 
     constructor(props) {
         super(props);
 
         this.state = {
             isLoading: true,
-            sections: null,
+            lessons: null,
         }
     }
 
     componentWillMount() {
-        this.registerSectionsListener();
+        this.registerLessonsListener();
     }
 
-    registerSectionsListener() {
-        db.getAllSectionsForBook( this.props.bookId )
+    registerLessonsListener() {
+        db.getAllLessonsForCourse( this.props.courseId )
             .onSnapshot((newSnapshot) => {
                 this.setState({
                     isLoading: false,
-                    sections: newSnapshot
+                    lessons: newSnapshot
                 });
             });
     }
 
-    goToSection( bookId, sectionId ) {
-        this.props.navigation.navigate( 'Section', {
-            bookId: bookId,
-            sectionId: sectionId
+    goToLesson( courseId, lessonId ) {
+        this.props.navigation.navigate( 'Lesson', {
+            courseId: courseId,
+            lessonId: lessonId
         });
     }
 
-    goToAddSection( bookId ) {
-        this.props.navigation.navigate( 'AddSection', {
-            bookId: bookId
+    goToAddLesson( courseId ) {
+        this.props.navigation.navigate( 'AddLesson', {
+            courseId: courseId
         });
     }
 
-    renderSections() {
-        let sectionItems = [];
+    renderLessons() {
+        let lessonItems = [];
 
-        this.state.sections.forEach((section) => {
+        this.state.lessons.forEach((lesson) => {
 
-            let sectionData = section.data();
+            let lessonData = lesson.data();
 
-            sectionItems.push(
+            lessonItems.push(
                 <ListItem
-                    key={section.id}
-                    title={sectionData.name}
+                    key={lesson.id}
+                    title={lessonData.name}
                     leftIcon={{name:'add'}}
-                    onPress={() => this.goToSection( this.props.bookId, section.id )}/>
+                    onPress={() => this.goToLesson( this.props.courseId, lesson.id )}/>
             );
         });
 
-        sectionItems.push(
+        lessonItems.push(
             <ListItem
-                key={'new-section'}
+                key={'new-lesson'}
                 title='New Level'
                 leftIcon={{name:'star'}}
-                onPress={() => this.goToAddSection( this.props.bookId )}/>
+                onPress={() => this.goToAddLesson( this.props.courseId )}/>
         );
 
-        return sectionItems;
+        return lessonItems;
     }
 
     render() {
@@ -80,15 +80,15 @@ class SectionList extends React.PureComponent {
         } else {
             return (
                 <List>
-                    { this.renderSections() }
+                    { this.renderLessons() }
                 </List>
             );
        }
     }
 }
 
-SectionList.propTypes = {
-    bookId: PropTypes.string.isRequired
+LessonList.propTypes = {
+    courseId: PropTypes.string.isRequired
 };
 
-export default withNavigation(SectionList);
+export default withNavigation(LessonList);

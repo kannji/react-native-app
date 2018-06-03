@@ -5,7 +5,7 @@ import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } fro
 
 import * as db from '../db';
 
-class CreateSection extends React.PureComponent {
+class CreateLesson extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -15,16 +15,16 @@ class CreateSection extends React.PureComponent {
         }
     }
 
-    createSection() {
+    createLesson() {
         this.setState({
             isAdding: true
         });
 
-        db.addSectionToBook({
-            newSection: {
+        db.addLessonToCourse({
+            newLesson: {
                 name: this.state.name,
             },
-            bookId: this.props.navigation.getParam('bookId')
+            courseId: this.props.navigation.getParam('courseId')
         }).then(() => {
             this.props.navigation.navigate('Home');
         });
@@ -37,7 +37,7 @@ class CreateSection extends React.PureComponent {
                     large
                     icon={{name: 'add'}}
                     title='Add'
-                    onPress={() => this.createSection()} />
+                    onPress={() => this.createLesson()} />
             );
         } else {
             return (
@@ -54,7 +54,7 @@ class CreateSection extends React.PureComponent {
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>{this.props.navigation.getParam('bookId')}Create new Level</Text>} />
+                    centerComponent={<Text>{this.props.navigation.getParam('courseId')}Create new Level</Text>} />
 
                 <FormLabel>Name</FormLabel>
                 <FormInput
@@ -67,14 +67,14 @@ class CreateSection extends React.PureComponent {
     }
 }
 
-CreateSection.propTypes = {
+CreateLesson.propTypes = {
     navigation: PropTypes.shape({
         state: PropTypes.shape({
             params: PropTypes.shape({
-                bookId: PropTypes.string.isRequired
+                courseId: PropTypes.string.isRequired
             })
         })
     })
 };
 
-export default CreateSection;
+export default CreateLesson;

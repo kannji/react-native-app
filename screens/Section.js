@@ -9,11 +9,11 @@ import * as db from '../db';
 import VocableList from './VocableList.js';
 
 
-class Section extends React.PureComponent {
+class Lesson extends React.PureComponent {
 
     render() {
-        let { bookId, navigation } = this.props;
-        let { id, name } = this.props.section;
+        let { courseId, navigation } = this.props;
+        let { id, name } = this.props.lesson;
 
         return (
             <View>
@@ -24,50 +24,50 @@ class Section extends React.PureComponent {
                     rightComponent={
                         <Icon
                             name='add'
-                            onPress={() => navigation.navigate( 'AddSection', { bookId: bookId } )} />
+                            onPress={() => navigation.navigate( 'AddLesson', { courseId: courseId } )} />
                     } />
 
-                <VocableList bookId={bookId} sectionId={id}/>
+                <VocableList courseId={courseId} lessonId={id}/>
 
             </View>
         );
     }
 }
 
-Section.propTypes = {
-    section: PropTypes.shape({
+Lesson.propTypes = {
+    lesson: PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
     }),
-    bookId: PropTypes.string.isRequired,
+    courseId: PropTypes.string.isRequired,
 };
 
-class SectionLoader extends React.PureComponent {
+class LessonLoader extends React.PureComponent {
     constructor( props ) {
         super( props );
 
         this.state = {
             isLoading: true,
-            section: null
+            lesson: null
         }
     }
     
     componentWillMount() {
-        this.registerSectionListener();
+        this.registerLessonListener();
     }
 
-    registerSectionListener() {
-        let { bookId, sectionId } = this.props.navigation.state.params;
+    registerLessonListener() {
+        let { courseId, lessonId } = this.props.navigation.state.params;
 
-        db.getSection( bookId, sectionId ).onSnapshot((newSnapshot) => {
+        db.getLesson( courseId, lessonId ).onSnapshot((newSnapshot) => {
             this.setState({
                 isLoading: false,
-                section: this.createSectionObjectFromSnapshot( newSnapshot )
+                lesson: this.createLessonObjectFromSnapshot( newSnapshot )
             })
         });
     }
 
-    createSectionObjectFromSnapshot( snapshot ) {
+    createLessonObjectFromSnapshot( snapshot ) {
         let data = snapshot.data();
 
         return {
@@ -80,21 +80,21 @@ class SectionLoader extends React.PureComponent {
         if ( this.state.isLoading ) {
             return <ActivityIndicator />
         } else {
-            return <Section section={this.state.section} bookId={this.props.navigation.state.params.bookId} />
+            return <Lesson lesson={this.state.lesson} courseId={this.props.navigation.state.params.courseId} />
         }
     }
 }
 
-SectionLoader.propTypes = {
+LessonLoader.propTypes = {
     navigation: PropTypes.shape({
         state: PropTypes.shape({
             params: PropTypes.shape({
-                bookId: PropTypes.string.isRequired,
-                sectionId: PropTypes.string.isRequired
+                courseId: PropTypes.string.isRequired,
+                lessonId: PropTypes.string.isRequired
             })
         })
     })
 }
 
-export default withNavigation( SectionLoader );
+export default withNavigation( LessonLoader );
 

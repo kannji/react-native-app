@@ -6,67 +6,67 @@ import { withNavigation } from 'react-navigation';
 import * as db from '../db';
 
 
-class BookList extends React.PureComponent {
+class CourseList extends React.PureComponent {
 
     constructor(props) {
         super(props);
 
         this.state = {
             isLoading: true,
-            booksSnapshot: null,
+            coursesSnapshot: null,
         }
     }
 
     componentWillMount() {
-        this.registerBookListener();
+        this.registerCourseListener();
     }
 
-    registerBookListener() {
-        db.getAllBooks()
+    registerCourseListener() {
+        db.getAllCourses()
             .onSnapshot((newSnapshot) => {
                 this.setState({
                     isLoading: false,
-                    booksSnapshot: newSnapshot
+                    coursesSnapshot: newSnapshot
                 });
             });
     }
 
-    goToBook( bookId ) {
-        this.props.navigation.navigate( 'Book', {
-            bookId: bookId,
+    goToCourse( courseId ) {
+        this.props.navigation.navigate( 'Course', {
+            courseId: courseId,
         });
     }
 
-    goToAddBook() {
-        this.props.navigation.navigate( 'AddBook' );
+    goToAddCourse() {
+        this.props.navigation.navigate( 'AddCourse' );
     }
 
-    renderBooks() {
-        let bookItems = [];
+    renderCourses() {
+        let courseItems = [];
 
-        this.state.booksSnapshot.forEach((book) => {
+        this.state.coursesSnapshot.forEach((course) => {
 
-            let bookData = book.data();
+            let courseData = course.data();
             
-            bookItems.push(
+            courseItems.push(
                 <ListItem
-                    key={book.id}
-                    title={bookData.name}
+                    key={course.id}
+                    title={courseData.name}
                     leftIcon={{name:'add'}}
-                    onPress={() => this.goToBook( book.id )} />
+                    onPress={() => this.goToCourse( course.id )} />
             );
 
         });
 
-        bookItems.push(
+        courseItems.push(
             <ListItem
-                key={'new-book'}
+                key={'new-course'}
                 title='New List'
                 leftIcon={{name:'star'}}
-                onPress={() => this.goToAddBook()} />
+                onPress={() => this.goToAddCourse()} />
         );
 
-        return bookItems;
+        return courseItems;
     }
 
     render() {
@@ -77,12 +77,12 @@ class BookList extends React.PureComponent {
         } else {
             return (
                 <List>
-                    { this.renderBooks() }
+                    { this.renderCourses() }
                 </List>
             );
        }
     }
 }
 
-export default withNavigation(BookList);
+export default withNavigation(CourseList);
 

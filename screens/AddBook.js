@@ -4,7 +4,7 @@ import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } fro
 
 import * as db from '../db';
 
-export default class CreateBook extends React.PureComponent {
+export default class CreateCourse extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -15,13 +15,13 @@ export default class CreateBook extends React.PureComponent {
         }
     }
 
-    createBook() {
+    createCourse() {
         this.setState({
             isAdding: true
         });
 
-        db.addBook({
-            newBook: {
+        db.addCourse({
+            newCourse: {
                 name: this.state.name,
                 description: this.state.description
             }
@@ -37,7 +37,7 @@ export default class CreateBook extends React.PureComponent {
                     large
                     icon={{name: 'add'}}
                     title='Add'
-                    onPress={() => this.createBook()} />
+                    onPress={() => this.createCourse()} />
             );
         } else {
             return (

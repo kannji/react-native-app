@@ -6,13 +6,13 @@ import { ActivityIndicator, View } from 'react-native';
 import { Header, Icon, Text } from 'react-native-elements';
 
 import * as db from '../db';
-import SectionList from './SectionList.js';
+import LessonList from './SectionList.js';
 
 
-class Book extends React.PureComponent {
+class Course extends React.PureComponent {
 
     render() {
-        let { id, name, description } = this.props.book;
+        let { id, name, description } = this.props.course;
 
         return (
             <View>
@@ -23,50 +23,50 @@ class Book extends React.PureComponent {
                     rightComponent={
                         <Icon
                             name='add'
-                            onPress={() => navigation.navigate( 'AddBook' )} />
+                            onPress={() => navigation.navigate( 'AddCourse' )} />
                     } />
 
                 <Text>{description}</Text>
 
-                <SectionList bookId={id} />
+                <LessonList courseId={id} />
 
             </View>
         );
     }
 }
 
-Book.propTypes = {
-    book: PropTypes.shape({
+Course.propTypes = {
+    course: PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
     })
 };
 
-class BookLoader extends React.PureComponent {
+class CourseLoader extends React.PureComponent {
     constructor( props ) {
         super( props );
 
         this.state = {
             isLoading: true,
-            book: null
+            course: null
         }
     }
     
     componentWillMount() {
-        this.registerBookListener();
+        this.registerCourseListener();
     }
 
-    registerBookListener() {
-        db.getBook( this.props.navigation.state.params.bookId ).onSnapshot((newSnapshot) => {
+    registerCourseListener() {
+        db.getCourse( this.props.navigation.state.params.courseId ).onSnapshot((newSnapshot) => {
             this.setState({
                 isLoading: false,
-                book: this.createBookObjectFromSnapshot( newSnapshot )
+                course: this.createCourseObjectFromSnapshot( newSnapshot )
             })
         });
     }
 
-    createBookObjectFromSnapshot( snapshot ) {
+    createCourseObjectFromSnapshot( snapshot ) {
         let data = snapshot.data();
 
         return {
@@ -80,19 +80,19 @@ class BookLoader extends React.PureComponent {
         if ( this.state.isLoading ) {
             return <ActivityIndicator />
         } else {
-            return <Book book={this.state.book} />
+            return <Course course={this.state.course} />
         }
     }
 }
 
-BookLoader.propTypes = {
+CourseLoader.propTypes = {
     navigation: PropTypes.shape({
         state: PropTypes.shape({
             params: PropTypes.shape({
-                bookId: PropTypes.string.isRequired
+                courseId: PropTypes.string.isRequired
             })
         })
     })
 }
 
-export default withNavigation( BookLoader );
+export default withNavigation( CourseLoader );
