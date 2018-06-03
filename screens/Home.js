@@ -66,7 +66,7 @@ export default class Home extends React.Component {
                         rightComponent={
                             <Icon
                                 name='add'
-                                onPress={() => this.props.navigation.navigate( 'AddLearningList' )} />
+                                onPress={() => this.props.navigation.navigate( 'AddBook' )} />
                         } />
                         <ActivityIndicator/>
                     </View>
@@ -81,7 +81,7 @@ export default class Home extends React.Component {
                     rightComponent={
                         <Icon
                             name='add'
-                            onPress={() => this.props.navigation.navigate( 'AddLearningList' )} />
+                            onPress={() => this.props.navigation.navigate( 'AddBook' )} />
                     } />
                     <List>
                         { this.renderLearningLists() }

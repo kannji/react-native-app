@@ -2,20 +2,20 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 
 import Home from './screens/Home';
-import AddLearningList from './screens/AddLearningList';
+import AddBook from './screens/AddBook';
 import LearningListDetail from './screens/LearningListDetail';
-import AddLearningListLevel from './screens/AddLearningListLevel';
+import AddSection from './screens/AddSection';
 import LearningLevelDetail from './screens/LearningLevelDetail';
-import AddLearningEntry from './screens/AddLearningEntry';
+import AddVocable from './screens/AddVocable';
 
 const NavRoot = createStackNavigator(
     {
         Home: {screen: Home},
-        AddLearningList: {screen: AddLearningList},
+        AddBook: {screen: AddBook},
         LearningListDetail: {screen: LearningListDetail},
-        AddLearningListLevel: {screen: AddLearningListLevel},
+        AddSection: {screen: AddSection},
         LearningLevelDetail: {screen: LearningLevelDetail},
-        AddLearningEntry: {screen: AddLearningEntry},
+        AddVocable: {screen: AddVocable},
     },
     {
         initialRoutName: 'Home',

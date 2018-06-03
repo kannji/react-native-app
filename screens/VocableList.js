@@ -53,7 +53,7 @@ class VocableList extends React.PureComponent {
                 key={'new-entry'}
                 title='New Entry'
                 leftIcon={{name:'star'}}
-                onPress={() => this.props.navigation.navigate( 'AddLearningEntry', {
+                onPress={() => this.props.navigation.navigate( 'AddVocable', {
                     learningListId: this.props.learningListId,
                     learningLevelId: this.props.learningLevelId
                 })}/>;

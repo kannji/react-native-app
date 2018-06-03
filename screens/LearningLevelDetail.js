@@ -23,7 +23,7 @@ export default class Section extends React.PureComponent {
                     rightComponent={
                         <Icon
                             name='add'
-                            onPress={() => navigation.navigate( 'AddLearningList' )} />
+                            onPress={() => navigation.navigate( 'AddBook' )} />
                     } />
 
                 <VocableList learningListId={learningListId} learningLevelId={learningLevelId}/>

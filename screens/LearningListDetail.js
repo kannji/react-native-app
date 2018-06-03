@@ -24,7 +24,7 @@ export default class Book extends React.PureComponent {
                     rightComponent={
                         <Icon
                             name='add'
-                            onPress={() => navigation.navigate( 'AddLearningList' )} />
+                            onPress={() => navigation.navigate( 'AddBook' )} />
                     } />
 
                 <Text>{description}</Text>
