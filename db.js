@@ -52,15 +52,15 @@ export function addVocableToLesson({
 }
 
 export function getAllCourses() {
-    return db.collection( 'LearningLists' );
+    return db.collection( 'Courses' );
 }
 
 export function getAllLessonsForCourse( courseId ) {
-    return getAllCourses().doc( courseId ).collection( 'Levels' );
+    return getAllCourses().doc( courseId ).collection( 'Lessons' );
 }
 
 export function getVocabularyForLesson( courseId, lessonId ) {
-    return getAllLessonsForCourse( courseId ).doc( lessonId ).collection( 'Entries' );
+    return getAllLessonsForCourse( courseId ).doc( lessonId ).collection( 'Vocabulary' );
 }
 
 export function getCourse( courseId ) {
