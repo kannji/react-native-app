@@ -1,37 +1,32 @@
 import React from 'react';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
-import firebase from '@firebase/app';
-import '@firebase/firestore';
 
-import FireStore from '../firestore';
+import * as db from '../db';
 
-export default class AddLearningList extends React.PureComponent {
+export default class CreateSection extends React.PureComponent {
 
     constructor(props) {
         super(props);
         this.state = {
             name: '',
-            description: '',
             isAdding: false
         }
     }
 
-    async createList() {
+    createSection() {
         this.setState({
             isAdding: true
         });
 
-        let timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-        await FireStore.collection('LearningLists').add({
-            name: this.state.name,
-            description: this.state.description,
-            createdAt: timestamp,
-            updatedAt: timestamp
+        db.addSectionToBook({
+            newSection: {
+                name: this.state.name,
+            },
+            bookId: this.props.navigation.getParam('bookId')
+        }).then(() => {
+            this.props.navigation.navigate('Home');
         });
-
-        this.props.navigation.navigate('Home');
     }
 
     getButton() {
@@ -41,7 +36,7 @@ export default class AddLearningList extends React.PureComponent {
                     large
                     icon={{name: 'add'}}
                     title='Add'
-                    onPress={() => this.createList()} />
+                    onPress={() => this.createSection()} />
             );
         } else {
             return (
@@ -58,15 +53,11 @@ export default class AddLearningList extends React.PureComponent {
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>Create new List</Text>} />
+                    centerComponent={<Text>{this.props.navigation.getParam('bookId')}Create new Level</Text>} />
 
                 <FormLabel>Name</FormLabel>
                 <FormInput
                     onChangeText={(name) => this.setState({name: name})} />
-
-                <FormLabel>Description</FormLabel>
-                <FormInput 
-                    onChangeText={(description) => this.setState({description: description})} />
 
                 { this.getButton() }
 
