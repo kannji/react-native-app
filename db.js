@@ -18,8 +18,6 @@ const db = firebase.firestore( firebase.initializeApp( APP_CONFIG ) );
 
 db.settings(FIRESTORE_SETTINGS);
 
-export default db;
-
 export function addBook({
     newBook
 } = {}) {
@@ -63,6 +61,14 @@ export function getAllSectionsForBook( bookId ) {
 
 export function getVocabularyForSection( bookId, sectionId ) {
     return getAllSectionsForBook( bookId ).doc( sectionId ).collection( 'Entries' );
+}
+
+export function getBook( bookId ) {
+    return getAllBooks().doc( bookId );
+}
+
+export function getSection( bookId, sectionId ) {
+    return getAllSectionsForBook( bookId ).doc( sectionId );
 }
 
 function getServerTime() {
