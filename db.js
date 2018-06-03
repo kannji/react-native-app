@@ -18,57 +18,57 @@ const db = firebase.firestore( firebase.initializeApp( APP_CONFIG ) );
 
 db.settings(FIRESTORE_SETTINGS);
 
-export function addBook({
-    newBook
+export function addCourse({
+    newCourse
 } = {}) {
-    return getAllBooks()
+    return getAllCourses()
         .add({
-            ...newBook,
+            ...newCourse,
             ...getNewTimestampObject()
         });
 }
 
-export function addSectionToBook({
-    newSection,
-    bookId
+export function addLessonToCourse({
+    newLesson,
+    courseId
 } = {}) {
-    return getAllSectionsForBook( bookId )
+    return getAllLessonsForCourse( courseId )
         .add({
-            ...newSection,
+            ...newLesson,
             ...getNewTimestampObject()
         });
 }
 
-export function addVocableToSection({
+export function addVocableToLesson({
     newVocable,
-    bookId,
-    sectionId
+    courseId,
+    lessonId
 } = {}) {
-    return getVocabularyForSection( bookId, sectionId )
+    return getVocabularyForLesson( courseId, lessonId )
         .add({
             ...newVocable,
             ...getNewTimestampObject()
         });
 }
 
-export function getAllBooks() {
-    return db.collection( 'LearningLists' );
+export function getAllCourses() {
+    return db.collection( 'Courses' );
 }
 
-export function getAllSectionsForBook( bookId ) {
-    return getAllBooks().doc( bookId ).collection( 'Levels' );
+export function getAllLessonsForCourse( courseId ) {
+    return getAllCourses().doc( courseId ).collection( 'Lessons' );
 }
 
-export function getVocabularyForSection( bookId, sectionId ) {
-    return getAllSectionsForBook( bookId ).doc( sectionId ).collection( 'Entries' );
+export function getVocabularyForLesson( courseId, lessonId ) {
+    return getAllLessonsForCourse( courseId ).doc( lessonId ).collection( 'Vocabulary' );
 }
 
-export function getBook( bookId ) {
-    return getAllBooks().doc( bookId );
+export function getCourse( courseId ) {
+    return getAllCourses().doc( courseId );
 }
 
-export function getSection( bookId, sectionId ) {
-    return getAllSectionsForBook( bookId ).doc( sectionId );
+export function getLesson( courseId, lessonId ) {
+    return getAllLessonsForCourse( courseId ).doc( lessonId );
 }
 
 function getServerTime() {

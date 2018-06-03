@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 
-import BookList from './BookList';
+import CourseList from './CourseList';
 
 export default class Home extends React.Component {
     render() {
@@ -14,10 +14,12 @@ export default class Home extends React.Component {
                     rightComponent={
                         <Icon
                             name='add'
-                            onPress={() => this.props.navigation.navigate( 'AddBook' )} />
+                            onPress={() => this.props.navigation.navigate( 'AddCourse' )} />
                     } />
 
-                <BookList />
+                <Text>Recent Courses:</Text>
+
+                <CourseList />
             </View>
         );
     }

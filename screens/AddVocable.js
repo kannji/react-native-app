@@ -27,7 +27,7 @@ class CreateVocable extends React.PureComponent {
 
         let {navigation} = this.props;
 
-        db.addVocableToSection({
+        db.addVocableToLesson({
             newVocable: {
                 kakikata: this.state.kakikata,
                 yomikata: this.state.yomikata,
@@ -35,8 +35,8 @@ class CreateVocable extends React.PureComponent {
                 remark: this.state.remark,
                 example: this.state.example
             },
-            bookId: navigation.getParam( 'bookId' ),
-            sectionId: navigation.getParam('sectionId')
+            courseId: navigation.getParam( 'courseId' ),
+            lessonId: navigation.getParam('lessonId')
         }).then(() => {
             this.props.navigation.navigate('Home');
         });
@@ -66,7 +66,7 @@ class CreateVocable extends React.PureComponent {
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>{this.props.navigation.getParam('sectionId')} add vocable</Text>} />
+                    centerComponent={<Text>Add new Vocable</Text>} />
 
                 <FormLabel>Way of writing</FormLabel>
                 <FormInput
@@ -99,8 +99,8 @@ CreateVocable.propTypes = {
     navigation: PropTypes.shape({
         state: PropTypes.shape({
             params: PropTypes.shape({
-                bookId: PropTypes.string.isRequired,
-                sectionId: PropTypes.string.isRequired
+                courseId: PropTypes.string.isRequired,
+                lessonId: PropTypes.string.isRequired
             })
         })
     })

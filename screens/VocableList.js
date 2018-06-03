@@ -23,10 +23,10 @@ class VocableList extends React.PureComponent {
     }
 
     registerVocabularyListener() {
-        let bookId = this.props.bookId;
-        let sectionId = this.props.sectionId;
+        let courseId = this.props.courseId;
+        let lessonId = this.props.lessonId;
 
-        db.getVocabularyForSection( bookId, sectionId )
+        db.getVocabularyForLesson( courseId, lessonId )
             .onSnapshot((newSnapshot) => {
                 this.setState({
                     isLoading: false,
@@ -35,10 +35,10 @@ class VocableList extends React.PureComponent {
             });
     }
 
-    goToAddVocable( bookId, sectionId ) {
+    goToAddVocable( courseId, lessonId ) {
         this.props.navigation.navigate( 'AddVocable', {
-            bookId: bookId,
-            sectionId: sectionId
+            courseId: courseId,
+            lessonId: lessonId
         });
     }
 
@@ -61,9 +61,9 @@ class VocableList extends React.PureComponent {
         vocabularyItems.push( 
             <ListItem
                 key={'new-vocable'}
-                title='New Vocable'
+                title='add Vocable'
                 leftIcon={{name:'star'}}
-                onPress={() => this.goToAddVocable( this.props.bookId, this.props.sectionId )}/>
+                onPress={() => this.goToAddVocable( this.props.courseId, this.props.lessonId )}/>
         );
 
         return vocabularyItems;
@@ -85,8 +85,8 @@ class VocableList extends React.PureComponent {
 }
 
 VocableList.propTypes = {
-    bookId: PropTypes.string.isRequired,
-    sectionId: PropTypes.string.isRequired
+    courseId: PropTypes.string.isRequired,
+    lessonId: PropTypes.string.isRequired
 };
 
 export default withNavigation(VocableList);
