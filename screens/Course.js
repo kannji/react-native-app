@@ -6,7 +6,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { Header, Icon, Text } from 'react-native-elements';
 
 import * as db from '../db';
-import LessonList from './SectionList.js';
+import LessonList from './LessonList.js';
 
 
 class Course extends React.PureComponent {

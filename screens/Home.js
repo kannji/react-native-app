@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 
-import CourseList from './BookList';
+import CourseList from './CourseList';
 
 export default class Home extends React.Component {
     render() {

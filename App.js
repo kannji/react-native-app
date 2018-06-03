@@ -2,10 +2,10 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 
 import Home from './screens/Home';
-import AddCourse from './screens/AddBook';
-import Course from './screens/Book';
-import AddLesson from './screens/AddSection';
-import Lesson from './screens/Section';
+import AddCourse from './screens/AddCourse';
+import Course from './screens/Course';
+import AddLesson from './screens/AddLesson';
+import Lesson from './screens/Lesson';
 import AddVocable from './screens/AddVocable';
 
 const NavRoot = createStackNavigator(
