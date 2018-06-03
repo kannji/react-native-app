@@ -54,7 +54,7 @@ class CreateLesson extends React.PureComponent {
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>{this.props.navigation.getParam('courseId')}Create new Level</Text>} />
+                    centerComponent={<Text>Create new Lesson</Text>} />
 
                 <FormLabel>Name</FormLabel>
                 <FormInput

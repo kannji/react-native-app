@@ -61,7 +61,7 @@ class VocableList extends React.PureComponent {
         vocabularyItems.push( 
             <ListItem
                 key={'new-vocable'}
-                title='New Vocable'
+                title='add Vocable'
                 leftIcon={{name:'star'}}
                 onPress={() => this.goToAddVocable( this.props.courseId, this.props.lessonId )}/>
         );

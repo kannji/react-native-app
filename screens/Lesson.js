@@ -20,12 +20,14 @@ class Lesson extends React.PureComponent {
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>List: {name}</Text>}
+                    centerComponent={<Text>Lesson: {name}</Text>}
                     rightComponent={
                         <Icon
                             name='add'
                             onPress={() => navigation.navigate( 'AddLesson', { courseId: courseId } )} />
                     } />
+
+                <Text>Vocabulary:</Text>
 
                 <VocableList courseId={courseId} lessonId={id}/>
 

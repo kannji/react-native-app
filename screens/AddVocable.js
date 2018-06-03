@@ -66,7 +66,7 @@ class CreateVocable extends React.PureComponent {
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>{this.props.navigation.getParam('lessonId')} add vocable</Text>} />
+                    centerComponent={<Text>Add new Vocable</Text>} />
 
                 <FormLabel>Way of writing</FormLabel>
                 <FormInput

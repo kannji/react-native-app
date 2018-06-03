@@ -19,7 +19,7 @@ class Course extends React.PureComponent {
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>List: {name}</Text>}
+                    centerComponent={<Text>Course: {name}</Text>}
                     rightComponent={
                         <Icon
                             name='add'
@@ -27,6 +27,8 @@ class Course extends React.PureComponent {
                     } />
 
                 <Text>{description}</Text>
+
+                <Text>Lessons:</Text>
 
                 <LessonList courseId={id} />
 

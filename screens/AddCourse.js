@@ -54,7 +54,7 @@ export default class CreateCourse extends React.PureComponent {
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>Create new List</Text>} />
+                    centerComponent={<Text>Create new Course</Text>} />
 
                 <FormLabel>Name</FormLabel>
                 <FormInput

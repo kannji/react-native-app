@@ -17,6 +17,8 @@ export default class Home extends React.Component {
                             onPress={() => this.props.navigation.navigate( 'AddCourse' )} />
                     } />
 
+                <Text>Recent Courses:</Text>
+
                 <CourseList />
             </View>
         );

@@ -64,7 +64,7 @@ class LessonList extends React.PureComponent {
         lessonItems.push(
             <ListItem
                 key={'new-lesson'}
-                title='New Level'
+                title='add Lesson'
                 leftIcon={{name:'star'}}
                 onPress={() => this.goToAddLesson( this.props.courseId )}/>
         );
