@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react-native';
 import { Header, Icon, List, ListItem } from 'react-native-elements'
 import { withNavigation } from 'react-navigation';
@@ -85,5 +86,9 @@ class SectionList extends React.PureComponent {
        }
     }
 }
+
+SectionList.propTypes = {
+    bookId: PropTypes.string.isRequired
+};
 
 export default withNavigation(SectionList);
