@@ -1,6 +1,7 @@
 import React from 'react';
-import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react-native';
-import { Header, Icon, List, ListItem } from 'react-native-elements'
+import PropTypes from 'prop-types';
+import { ActivityIndicator } from 'react-native';
+import { List, ListItem, Text } from 'react-native-elements'
 import { withNavigation } from 'react-navigation';
 
 import * as db from '../db';
@@ -82,6 +83,11 @@ class VocableList extends React.PureComponent {
         }
     }
 }
+
+VocableList.propTypes = {
+    bookId: PropTypes.string.isRequired,
+    sectionId: PropTypes.string.isRequired
+};
 
 export default withNavigation(VocableList);
 

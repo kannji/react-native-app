@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
 
 import * as db from '../db';
 
-export default class CreateSection extends React.PureComponent {
+class CreateSection extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -66,3 +67,14 @@ export default class CreateSection extends React.PureComponent {
     }
 }
 
+CreateSection.propTypes = {
+    navigation: PropTypes.shape({
+        state: PropTypes.shape({
+            params: PropTypes.shape({
+                bookId: PropTypes.string.isRequired
+            })
+        })
+    })
+};
+
+export default CreateSection;
