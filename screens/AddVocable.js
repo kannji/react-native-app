@@ -34,8 +34,8 @@ export default class CreateVocable extends React.PureComponent {
                 remark: this.state.remark,
                 example: this.state.example
             },
-            bookId: navigation.getParam( 'learningListId' ),
-            sectionId: navigation.getParam('learningLevelId')
+            bookId: navigation.getParam( 'bookId' ),
+            sectionId: navigation.getParam('sectionId')
         }).then(() => {
             this.props.navigation.navigate('Home');
         });
@@ -65,7 +65,7 @@ export default class CreateVocable extends React.PureComponent {
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>{this.props.navigation.getParam('learningListId')}Create new Level</Text>} />
+                    centerComponent={<Text>{this.props.navigation.getParam('sectionId')} add vocable</Text>} />
 
                 <FormLabel>Way of writing</FormLabel>
                 <FormInput

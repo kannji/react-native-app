@@ -1,6 +1,6 @@
 import React from 'react';
-import {ActivityIndicator, Button, ListView, StyleSheet, Text, View} from 'react-native';
-import { Header, Icon, List, ListItem } from 'react-native-elements'
+import { View } from 'react-native';
+import { Header, Icon, Text } from 'react-native-elements'
 
 import FireStore from '../db';
 import SectionList from './SectionList.js'
@@ -11,7 +11,7 @@ export default class Book extends React.PureComponent {
     render() {
         let {navigation} = this.props;
 
-        let id = navigation.getParam( 'id' );
+        let id = navigation.getParam( 'bookId' );
         let name = navigation.getParam( 'name' );
         let description = navigation.getParam( 'description' );
 
@@ -29,7 +29,8 @@ export default class Book extends React.PureComponent {
 
                 <Text>{description}</Text>
 
-                <SectionList learningListId={id} />
+                <SectionList bookId={id} />
+
             </View>
         );
     }

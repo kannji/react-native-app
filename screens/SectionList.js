@@ -11,54 +11,66 @@ class SectionList extends React.PureComponent {
     constructor(props) {
         super(props);
 
+        console.log(this.props);
+
         this.state = {
             isLoading: true,
-            learningListLevelsSnapshot: null,
+            sections: null,
         }
     }
 
     componentWillMount() {
-        this.registerSectionListener();
+        this.registerSectionsListener();
     }
 
-    registerSectionListener() {
-        let bookId = this.props.learningListId;
-
-        db.getAllSectionsForBook( bookId )
-            .onSnapshot((levelSnapshot) => {
+    registerSectionsListener() {
+        db.getAllSectionsForBook( this.props.bookId )
+            .onSnapshot((newSnapshot) => {
                 this.setState({
                     isLoading: false,
-                    learningListLevelsSnapshot: levelSnapshot
+                    sections: newSnapshot
                 });
             });
     }
 
-    renderLearningListLevels() {
-        let learningListLevelItems = [];
-        let {navigation, learningListId} = this.props;
+    goToSection( bookId, sectionId ) {
+        this.props.navigation.navigate( 'Section', {
+            bookId: bookId,
+            sectionId: sectionId
+        });
+    }
 
-        this.state.learningListLevelsSnapshot.forEach((learningListLevelDocument) => {
-            let learningListLevelData = learningListLevelDocument.data();
-            learningListLevelItems.push(
+    goToAddSection( bookId ) {
+        this.props.navigation.navigate( 'AddSection', {
+            bookId: bookId
+        });
+    }
+
+    renderSections() {
+        let sectionItems = [];
+
+        this.state.sections.forEach((section) => {
+
+            let sectionData = section.data();
+
+            sectionItems.push(
                 <ListItem
-                    key={learningListLevelDocument.id}
-                    title={learningListLevelData.name}
+                    key={section.id}
+                    title={sectionData.name}
                     leftIcon={{name:'add'}}
-                    onPress={() => navigation.navigate( 'Section', { learningListId: this.props.learningListId, learningLevelId: learningListLevelDocument.id })}/>
+                    onPress={() => this.goToSection( this.props.bookId, section.id )}/>
             );
         });
 
-        learningListLevelItems.push(
+        sectionItems.push(
             <ListItem
-                key={'new-level'}
+                key={'new-section'}
                 title='New Level'
                 leftIcon={{name:'star'}}
-                onPress={() => navigation.navigate( 'AddSection', {
-                    learningListId: learningListId
-                })}/>
+                onPress={() => this.goToAddSection( this.props.bookId )}/>
         );
 
-        return learningListLevelItems;
+        return sectionItems;
     }
 
     render() {
@@ -69,7 +81,7 @@ class SectionList extends React.PureComponent {
         } else {
             return (
                 <List>
-                    { this.renderLearningListLevels() }
+                    { this.renderSections() }
                 </List>
             );
        }

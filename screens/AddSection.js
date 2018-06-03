@@ -23,7 +23,7 @@ export default class CreateSection extends React.PureComponent {
             newSection: {
                 name: this.state.name,
             },
-            bookId: this.props.navigation.getParam('learningListId')
+            bookId: this.props.navigation.getParam('bookId')
         }).then(() => {
             this.props.navigation.navigate('Home');
         });
@@ -53,7 +53,7 @@ export default class CreateSection extends React.PureComponent {
 
                 <Header
                     leftComponent={<Icon name='menu' />}
-                    centerComponent={<Text>{this.props.navigation.getParam('learningListId')}Create new Level</Text>} />
+                    centerComponent={<Text>{this.props.navigation.getParam('bookId')}Create new Level</Text>} />
 
                 <FormLabel>Name</FormLabel>
                 <FormInput

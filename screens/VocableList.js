@@ -13,7 +13,7 @@ class VocableList extends React.PureComponent {
 
         this.state = {
             isLoading: true,
-            learningListLevelsSnapshot: null,
+            vocabulary: null,
         }
     }
 
@@ -22,45 +22,50 @@ class VocableList extends React.PureComponent {
     }
 
     registerVocabularyListener() {
-        let bookId = this.props.learningListId;
-        let sectionId = this.props.learningLevelId;
+        let bookId = this.props.bookId;
+        let sectionId = this.props.sectionId;
 
         db.getVocabularyForSection( bookId, sectionId )
-            .onSnapshot((levelSnapshot) => {
+            .onSnapshot((newSnapshot) => {
                 this.setState({
                     isLoading: false,
-                    learningListLevelsSnapshot: levelSnapshot
+                    vocabulary: newSnapshot
                 });
             });
     }
 
-    renderLearningListLevels() {
-        let learningListLevelItems = [];
+    goToAddVocable( bookId, sectionId ) {
+        this.props.navigation.navigate( 'AddVocable', {
+            bookId: bookId,
+            sectionId: sectionId
+        });
+    }
 
-        this.state.learningListLevelsSnapshot.forEach((learningListLevelDocument) => {
-            let learningListLevelData = learningListLevelDocument.data();
-            learningListLevelItems.push(
+    renderVocabulary() {
+        let vocabularyItems = [];
+
+        this.state.vocabulary.forEach((vocable) => {
+
+            let vocableData = vocable.data();
+
+            vocabularyItems.push(
                 <ListItem
-                    key={learningListLevelDocument.id}
-                    title={learningListLevelData.kakikata}
-                    subtitle={learningListLevelData.translation}
+                    key={vocable.id}
+                    title={vocableData.kakikata}
+                    subtitle={vocableData.translation}
                     leftIcon={{name:'edit'}} />
             );
         });
 
-        let addLearningListLevel = 
+        vocabularyItems.push( 
             <ListItem
-                key={'new-entry'}
-                title='New Entry'
+                key={'new-vocable'}
+                title='New Vocable'
                 leftIcon={{name:'star'}}
-                onPress={() => this.props.navigation.navigate( 'AddVocable', {
-                    learningListId: this.props.learningListId,
-                    learningLevelId: this.props.learningLevelId
-                })}/>;
+                onPress={() => this.goToAddVocable( this.props.bookId, this.props.sectionId )}/>
+        );
 
-        learningListLevelItems.push(addLearningListLevel);
-
-        return learningListLevelItems;
+        return vocabularyItems;
     }
 
     render() {
@@ -71,7 +76,7 @@ class VocableList extends React.PureComponent {
         } else {
             return (
                 <List>
-                    { this.renderLearningListLevels() }
+                    { this.renderVocabulary() }
                 </List>
             );
         }
