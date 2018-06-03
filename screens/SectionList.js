@@ -44,7 +44,7 @@ class SectionList extends React.PureComponent {
                     key={learningListLevelDocument.id}
                     title={learningListLevelData.name}
                     leftIcon={{name:'add'}}
-                    onPress={() => navigation.navigate( 'LearningLevelDetail', { learningListId: this.props.learningListId, learningLevelId: learningListLevelDocument.id })}/>
+                    onPress={() => navigation.navigate( 'Section', { learningListId: this.props.learningListId, learningLevelId: learningListLevelDocument.id })}/>
             );
         });
 

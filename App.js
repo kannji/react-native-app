@@ -3,18 +3,18 @@ import { createStackNavigator } from 'react-navigation';
 
 import Home from './screens/Home';
 import AddBook from './screens/AddBook';
-import LearningListDetail from './screens/LearningListDetail';
+import Book from './screens/Book';
 import AddSection from './screens/AddSection';
-import LearningLevelDetail from './screens/LearningLevelDetail';
+import Section from './screens/Section';
 import AddVocable from './screens/AddVocable';
 
 const NavRoot = createStackNavigator(
     {
         Home: {screen: Home},
         AddBook: {screen: AddBook},
-        LearningListDetail: {screen: LearningListDetail},
+        Book: {screen: Book},
         AddSection: {screen: AddSection},
-        LearningLevelDetail: {screen: LearningLevelDetail},
+        Section: {screen: Section},
         AddVocable: {screen: AddVocable},
     },
     {

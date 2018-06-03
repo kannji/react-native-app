@@ -32,7 +32,7 @@ export default class Home extends React.Component {
     navigateToLearningListDetail(learningListDocument) {
         let learningListData = learningListDocument.data();
 
-        this.props.navigation.navigate('LearningListDetail', {
+        this.props.navigation.navigate('Book', {
             id: learningListDocument.id,
             name: learningListData.name,
             description: learningListData.description
