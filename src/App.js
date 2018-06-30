@@ -1,6 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 
+import './aggregators/allAggregators';
+
 import Home from './screens/Home';
 import AddCourse from './screens/AddCourse';
 import Course from './screens/Course';
