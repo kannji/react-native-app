@@ -74,7 +74,7 @@ export function getLesson( courseId, lessonId ) {
     return getAllLessonsForCourse( courseId ).doc( lessonId );
 }
 
-function getServerTime() {
+export function getServerTime() {
     return firebase.firestore.FieldValue.serverTimestamp();
 }
 
