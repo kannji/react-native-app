@@ -8,6 +8,15 @@ const db = firebase.firestore();
 
 db.settings(FIRESTORE_SETTINGS);
 
+export function addEvent({
+    newEvent
+} = {}) {
+    return getAllEvents()
+        .add({
+            ...newEvent
+        });
+}
+
 export function addCourse({
     newCourse
 } = {}) {
@@ -39,6 +48,10 @@ export function addVocableToLesson({
             ...newVocable,
             ...getNewTimestampObject()
         });
+}
+
+export function getAllEvents() {
+    return db.collection( 'Events' );
 }
 
 export function getAllCourses() {
@@ -73,3 +86,4 @@ function getNewTimestampObject() {
         updatedAt: serverTime
     }
 }
+
