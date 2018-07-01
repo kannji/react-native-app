@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
 
-import * as db from '../db';
+import EventBus from '../events/EventBus';
+import LessonCreated from '../events/LessonCreated';
+import LessonPersisted from '../events/LessonPersisted';
 
 class CreateLesson extends React.PureComponent {
 
@@ -20,14 +22,15 @@ class CreateLesson extends React.PureComponent {
             isAdding: true
         });
 
-        db.addLessonToCourse({
-            newLesson: {
-                name: this.state.name,
-            },
-            courseId: this.props.navigation.getParam('courseId')
-        }).then(() => {
+        let createdLessonEvent = new LessonCreated({
+            name: this.state.name,
+        }, this.props.navigation.getParam('courseId'), EventBus.generateNewStreamId());
+
+        createdLessonEvent.onReaction( LessonPersisted, ( persistedLessonEvent ) => {
             this.props.navigation.navigate('Home');
         });
+
+        createdLessonEvent.trigger( );
     }
 
     getButton() {

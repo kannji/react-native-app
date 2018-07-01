@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
 
-import * as db from '../db';
 import EventBus from '../events/EventBus';
 import CourseCreated from '../events/CourseCreated';
 import CoursePersisted from '../events/CoursePersisted';
+
 
 export default class CreateCourse extends React.PureComponent {
 
