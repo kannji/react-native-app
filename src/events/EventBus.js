@@ -1,6 +1,3 @@
-import uuid4 from 'uuid/v4';
-
-
 class Listener {
     constructor( streamId ) {
         this._eventListener = [];
@@ -33,7 +30,7 @@ class StreamListener extends Listener {
     }
 
     shouldListenerGetNotified( event, eventListener ) {
-        return event.streamId == this._streamId && super.shouldListenerGetNotified( event, eventListener );
+        return event._streamId == this._streamId && super.shouldListenerGetNotified( event, eventListener );
     }
 }
 
@@ -62,14 +59,11 @@ class EventBus {
     feedIn( event ) {
         this._streamListener[ 'global' ].notifyAbout( event );
 
-        if( event.streamId in this._streamListener ) {
-            this._streamListener[ event.streamId ].notifyAbout( event );
+        if( event._streamId in this._streamListener ) {
+            this._streamListener[ event._streamId ].notifyAbout( event );
         }
     }
 
-    generateNewStreamId() {
-        return uuid4();
-    }
 }
 
 export default new EventBus();

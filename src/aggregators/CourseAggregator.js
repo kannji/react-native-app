@@ -8,10 +8,10 @@ EventBus.on( CourseCreated, ( createdCourseEvent ) => {
         newCourse: createdCourseEvent.getPayload()
     }).then(( persistedCourse ) => {
         
-        let persistedCourseEvent = new CoursePersisted({
+        let persistedCourseReaction = new CoursePersisted({
             courseId: 'test'
-        }, createdCourseEvent.streamId );
+        }, createdCourseEvent._streamId );
 
-        createdCourseEvent.reactWith( persistedCourseEvent );
+        createdCourseEvent.reactWith( persistedCourseReaction );
     });
 });

@@ -1,7 +1,7 @@
-import Event from './Event';
+import Reaction from './Reaction';
 
 
-class CoursePersisted extends Event {
+class CoursePersisted extends Reaction {
 
 };
 

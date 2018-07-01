@@ -1,51 +1,30 @@
 import uuid4 from 'uuid/v4';
 
-import * as db from '../db';
 import EventBus from './EventBus';
+import Triggerable from './Triggerable';
+import Reaction from './Reaction';
 
-class Event {
+class Event extends Triggerable {
 
-    constructor( payload, streamId ) {
-        this.createdAt = db.getServerTime();
-        this.payload = payload;
-        this.streamId = streamId;
+    constructor( payload ) {
+        super( payload );
+        this._streamId = this.generateStreamId();
     }
 
-    trigger() {
-        if( !this.triggeredAt ) {
-            this.triggeredAt = db.getServerTime();
-            EventBus.feedIn( this );
-        } else {
-            throw "You can't trigger an Event twice!";
-        }
+    onReaction( reaction, callback ) {
+        EventBus.in( this._streamId ).on( reaction, callback )
     }
 
-    onReaction( reactionEvent, callback ) {
-        EventBus.in( this.streamId ).on( reactionEvent, callback )
-    }
-
-    reactWith( reactionEvent ) {
-        console.log( 'reacting...' )
-        if( this.triggeredAt && this.streamId && reactionEvent.streamId == this.streamId) {
-            console.log( 'feeding event bus' );
-            EventBus.feedIn( reactionEvent );
+    reactWith( reaction ) {
+        if( reaction instanceof Reaction && this._triggeredAt && this._streamId && reaction._streamId == this._streamId) {
+            reaction.trigger();
         } else {
             throw 'You can\'t react to an Event that didn\'t yet happen!';
         }
     }
 
-    getData() {
-        return {
-            createdAt: this.createdAt,
-            triggeredAt: this.triggeredAt,
-            streamId: this.streamId,
-            type: this.constructor.name,
-            payload: this.getPayload()
-        }
-    }
-
-    getPayload() {
-        return this.payload;
+    generateStreamId() {
+        return uuid4();
     }
 }
 

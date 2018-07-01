@@ -24,7 +24,7 @@ class CreateLesson extends React.PureComponent {
 
         let createdLessonEvent = new LessonCreated({
             name: this.state.name,
-        }, this.props.navigation.getParam('courseId'), EventBus.generateNewStreamId());
+        }, this.props.navigation.getParam('courseId'));
 
         createdLessonEvent.onReaction( LessonPersisted, ( persistedLessonEvent ) => {
             this.props.navigation.navigate('Home');

@@ -2,8 +2,8 @@ import Event from './Event';
 
 
 class LessonCreated extends Event {
-    constructor( payload, courseId, streamId ) {
-        super( payload, streamId );
+    constructor( payload, courseId ) {
+        super( payload );
         this._courseId = courseId;
     }
 

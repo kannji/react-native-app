@@ -2,8 +2,8 @@ import Event from './Event';
 
 
 class VocableCreated extends Event {
-    constructor( payload, courseId, lessonId, streamId ) {
-        super( payload, streamId );
+    constructor( payload, courseId, lessonId ) {
+        super( payload );
         this._courseId = courseId;
         this._lessonId = lessonId;
     }

@@ -26,7 +26,7 @@ export default class CreateCourse extends React.PureComponent {
         let createdCourseEvent = new CourseCreated({
             name: this.state.name,
             description: this.state.description
-        }, EventBus.generateNewStreamId());
+        });
 
         createdCourseEvent.onReaction( CoursePersisted, ( persistedCourseEvent ) => {
             this.props.navigation.navigate('Home');

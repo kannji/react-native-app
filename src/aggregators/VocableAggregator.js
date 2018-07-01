@@ -9,11 +9,11 @@ EventBus.on( VocableCreated, ( createdVocableEvent ) => {
         courseId: createdVocableEvent.getCourseId(),
         lessonId: createdVocableEvent.getLessonId()
     }).then(( persistedVocable ) => {
-        let persistedVocableEvent = new VocablePersisted({
+        let persistedVocableReaction = new VocablePersisted({
             vocableId: 'test'
-        }, createdVocableEvent.streamId );
+        }, createdVocableEvent._streamId );
 
-        createdVocableEvent.reactWith( persistedVocableEvent );
+        createdVocableEvent.reactWith( persistedVocableReaction );
     });
 });
 
