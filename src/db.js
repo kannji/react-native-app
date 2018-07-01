@@ -8,6 +8,15 @@ const db = firebase.firestore();
 
 db.settings(FIRESTORE_SETTINGS);
 
+export function addEvent({
+    newEvent
+} = {}) {
+    return getAllEvents()
+        .add({
+            ...newEvent
+        });
+}
+
 export function addCourse({
     newCourse
 } = {}) {
@@ -41,6 +50,10 @@ export function addVocableToLesson({
         });
 }
 
+export function getAllEvents() {
+    return db.collection( 'Events' );
+}
+
 export function getAllCourses() {
     return db.collection( 'Courses' );
 }
@@ -61,7 +74,7 @@ export function getLesson( courseId, lessonId ) {
     return getAllLessonsForCourse( courseId ).doc( lessonId );
 }
 
-function getServerTime() {
+export function getServerTime() {
     return firebase.firestore.FieldValue.serverTimestamp();
 }
 
@@ -73,3 +86,4 @@ function getNewTimestampObject() {
         updatedAt: serverTime
     }
 }
+

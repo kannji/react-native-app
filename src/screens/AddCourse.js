@@ -2,7 +2,10 @@ import React from 'react';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
 
-import * as db from '../db';
+import EventBus from '../events/EventBus';
+import CourseCreated from '../events/CourseCreated';
+import CoursePersisted from '../events/CoursePersisted';
+
 
 export default class CreateCourse extends React.PureComponent {
 
@@ -19,15 +22,17 @@ export default class CreateCourse extends React.PureComponent {
         this.setState({
             isAdding: true
         });
+        
+        let createdCourseEvent = new CourseCreated({
+            name: this.state.name,
+            description: this.state.description
+        });
 
-        db.addCourse({
-            newCourse: {
-                name: this.state.name,
-                description: this.state.description
-            }
-        }).then(() => {
+        createdCourseEvent.onReaction( CoursePersisted, ( persistedCourseEvent ) => {
             this.props.navigation.navigate('Home');
         });
+
+        createdCourseEvent.trigger( );
     }
 
     getButton() {

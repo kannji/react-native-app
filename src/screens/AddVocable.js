@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { StyleSheet, TextInput, Text, View} from 'react-native';
 import { Header, Icon, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
 
-import * as db from '../db';
+import EventBus from '../events/EventBus';
+import VocableCreated from '../events/VocableCreated';
+import VocablePersisted from '../events/VocablePersisted';
 
 
 class CreateVocable extends React.PureComponent {
@@ -25,21 +27,21 @@ class CreateVocable extends React.PureComponent {
             isAdding: true
         });
 
-        let {navigation} = this.props;
+        let { navigation } = this.props;
 
-        db.addVocableToLesson({
-            newVocable: {
-                kakikata: this.state.kakikata,
-                yomikata: this.state.yomikata,
-                translation: this.state.translation,
-                remark: this.state.remark,
-                example: this.state.example
-            },
-            courseId: navigation.getParam( 'courseId' ),
-            lessonId: navigation.getParam('lessonId')
-        }).then(() => {
+        let createdVocableEvent = new VocableCreated({
+            kakikata: this.state.kakikata,
+            yomikata: this.state.yomikata,
+            translation: this.state.translation,
+            remark: this.state.remark,
+            example: this.state.example
+        }, navigation.getParam( 'courseId' ), navigation.getParam('lessonId'));
+
+        createdVocableEvent.onReaction( VocablePersisted, ( persistedVocableEvent ) => {
             this.props.navigation.navigate('Home');
         });
+
+        createdVocableEvent.trigger( );
     }
 
     getButton() {
