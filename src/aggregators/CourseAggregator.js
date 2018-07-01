@@ -4,14 +4,14 @@ import CourseCreated from '../events/CourseCreated';
 import CoursePersisted from '../events/CoursePersisted';
 
 EventBus.on( CourseCreated, ( createdCourseEvent ) => {
-    db.addCourse({ newCourse: createdCourseEvent.payload }).then(( persistedCourse ) => {
-        console.log(persistedCourse);
+    db.addCourse({
+        newCourse: createdCourseEvent.getPayload()
+    }).then(( persistedCourse ) => {
         
         let persistedCourseEvent = new CoursePersisted({
             courseId: 'test'
         }, createdCourseEvent.streamId );
 
-        console.log( 'rect to event' )
         createdCourseEvent.reactWith( persistedCourseEvent );
     });
 });

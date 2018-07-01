@@ -40,8 +40,12 @@ class Event {
             triggeredAt: this.triggeredAt,
             streamId: this.streamId,
             type: this.constructor.name,
-            payload: this.payload
+            payload: this.getPayload()
         }
+    }
+
+    getPayload() {
+        return this.payload;
     }
 }
 
