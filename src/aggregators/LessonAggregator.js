@@ -9,7 +9,8 @@ EventBus.on( LessonCreated, ( createdLessonEvent ) => {
         courseId: createdLessonEvent.getCourseId()
     }).then(( persistedLesson ) => {
         let persistedLessonReaction = new LessonPersisted({
-            lessonId: 'test'
+            lessonId: persistedLesson.id,
+            courseId: createdLessonEvent.getCourseId()
         }, createdLessonEvent._streamId );
 
         createdLessonEvent.reactWith( persistedLessonReaction );

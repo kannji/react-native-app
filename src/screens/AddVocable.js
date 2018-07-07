@@ -38,7 +38,10 @@ class CreateVocable extends React.PureComponent {
         }, navigation.getParam( 'courseId' ), navigation.getParam('lessonId'));
 
         createdVocableEvent.onReaction( VocablePersisted, ( persistedVocableEvent ) => {
-            this.props.navigation.navigate('Home');
+            this.props.navigation.navigate( 'Lesson', {
+                courseId: persistedVocableEvent.getCourseId(),
+                lessonId: persistedVocableEvent.getLessonId()
+            });
         });
 
         createdVocableEvent.trigger( );

@@ -9,7 +9,7 @@ EventBus.on( CourseCreated, ( createdCourseEvent ) => {
     }).then(( persistedCourse ) => {
         
         let persistedCourseReaction = new CoursePersisted({
-            courseId: 'test'
+            courseId: persistedCourse.id
         }, createdCourseEvent._streamId );
 
         createdCourseEvent.reactWith( persistedCourseReaction );

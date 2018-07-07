@@ -29,7 +29,9 @@ export default class CreateCourse extends React.PureComponent {
         });
 
         createdCourseEvent.onReaction( CoursePersisted, ( persistedCourseEvent ) => {
-            this.props.navigation.navigate('Home');
+            this.props.navigation.navigate( 'Course', {
+                courseId: persistedCourseEvent.getCourseId()
+            });
         });
 
         createdCourseEvent.trigger( );

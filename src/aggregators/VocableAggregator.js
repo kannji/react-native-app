@@ -10,7 +10,9 @@ EventBus.on( VocableCreated, ( createdVocableEvent ) => {
         lessonId: createdVocableEvent.getLessonId()
     }).then(( persistedVocable ) => {
         let persistedVocableReaction = new VocablePersisted({
-            vocableId: 'test'
+            vocableId: persistedVocable.id,
+            lessonId: createdVocableEvent.getLessonId(),
+            courseId: createdVocableEvent.getCourseId()
         }, createdVocableEvent._streamId );
 
         createdVocableEvent.reactWith( persistedVocableReaction );
