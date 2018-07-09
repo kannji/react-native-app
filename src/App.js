@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation';
 
 import './aggregators/allAggregators';
 
+import Signin from './screens/Signin';
 import Home from './screens/Home';
 import AddCourse from './screens/AddCourse';
 import Course from './screens/Course';
@@ -12,6 +13,7 @@ import AddVocable from './screens/AddVocable';
 
 const NavRoot = createStackNavigator(
     {
+        Signin: {screen: Signin},
         Home: {screen: Home},
         AddCourse: {screen: AddCourse},
         Course: {screen: Course},
@@ -20,7 +22,7 @@ const NavRoot = createStackNavigator(
         AddVocable: {screen: AddVocable},
     },
     {
-        initialRoutName: 'Home',
+        initialRoutName: 'Signin',
         headerMode: 'none'
     }
 );

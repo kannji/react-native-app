@@ -58,6 +58,10 @@ export function getAllCourses() {
     return db.collection( 'Courses' );
 }
 
+export function getAllCoursesForUser( userId ) {
+    return getAllCourses().where( 'userId', '==', userId );
+}
+
 export function getAllLessonsForCourse( courseId ) {
     return getAllCourses().doc( courseId ).collection( 'Lessons' );
 }
