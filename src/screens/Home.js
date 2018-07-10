@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
-import { Header, Icon, List, ListItem } from 'react-native-elements'
+import { Text, View } from 'react-native';
+import { Header, Icon, Button } from 'react-native-elements';
 
+import withSideMenu from './SideMenu';
 import CourseList from './CourseList';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
     render() {
         return (
             <View>
@@ -24,4 +25,6 @@ export default class Home extends React.Component {
         );
     }
 }
+
+export default withSideMenu( Home );
 
