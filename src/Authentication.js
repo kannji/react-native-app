@@ -1,4 +1,5 @@
 import { GoogleSignin } from 'react-native-google-signin';
+import firebase from 'react-native-firebase';
 
 
 const config = {
@@ -13,13 +14,15 @@ class GoogleAuthenticationWrapper {
             await GoogleSignin.hasPlayServices({ autoResolve: true });
             await GoogleSignin.configure( config );
 
-            GoogleSignin.currentUserAsync()
-                .then( user => {
-                    resolve( user );
-                })
-                .catch( error => {
-                    reject( error );
-                } );
+            let user = await GoogleSignin.currentUserAsync();
+
+            if ( user ) {
+                let userData = await this._authenticateWithBackend( user );
+                resolve( userData );
+            } else {
+                resolve( null );
+            }
+
         });
     }
 
@@ -27,20 +30,21 @@ class GoogleAuthenticationWrapper {
         return this._currentUser;
     }
 
+    getCurrentUserId() {
+        return this._currentUserData.user.uid;
+    }
+
     isSignedIn() {
         return !! this._currentUser;
     }
 
     signIn() {
-        return new Promise( ( resolve, reject ) => {
-            GoogleSignin.signIn()
-                .then( user => {
-                    this._currentUser = user;
-                    resolve( user );
-                })
-                .catch( error => {
-                   reject( error );
-                });
+        return new Promise( async ( resolve, reject ) => {
+            let user = await GoogleSignin.signIn();
+
+            let userData = await this._authenticateWithBackend( user );
+
+            resolve( userData );
         });
     }
 
@@ -58,6 +62,13 @@ class GoogleAuthenticationWrapper {
                         });
                 });
         });
+    }
+
+    async _authenticateWithBackend( user ) {
+        let credential = firebase.auth.GoogleAuthProvider.credential(user.idToken, user.accessToken)
+
+        this._currentUserData = await firebase.auth().signInAndRetrieveDataWithCredential(credential);
+        this._currentUser = user;
     }
 }
 
